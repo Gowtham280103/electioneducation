@@ -1,0 +1,29 @@
+PASTE THESE COMMANDS ONE BY ONE IN GOOGLE CLOUD SHELL:
+
+# STEP 1 - Clone your GitHub repo
+git clone https://github.com/Gowtham280103/electioneducation.git
+cd electioneducation
+
+# STEP 2 - Set your project ID (check top of Cloud Shell for your project ID)
+export PROJECT_ID=$(gcloud config get-value project)
+echo "Project: $PROJECT_ID"
+
+# STEP 3 - Enable required APIs
+gcloud services enable run.googleapis.com cloudbuild.googleapis.com
+
+# STEP 4 - Build and deploy to Cloud Run in ONE command
+gcloud run deploy election-educator \
+  --source . \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --port 8080 \
+  --memory 512Mi \
+  --cpu 1 \
+  --max-instances 3
+
+# STEP 5 - Get your live URL
+gcloud run services describe election-educator \
+  --platform managed \
+  --region us-central1 \
+  --format 'value(status.url)'
