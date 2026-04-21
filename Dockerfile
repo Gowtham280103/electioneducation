@@ -1,13 +1,13 @@
 # Stage 1: Build the React app
-FROM node:20-alpine AS builder
+FROM node:20.17.0-alpine AS builder
 
 WORKDIR /app
 
-# Copy package files
+# Copy package files first for better layer caching
 COPY package.json ./
 
-# Install dependencies
-RUN npm install
+# Install dependencies with legacy peer deps to avoid conflicts
+RUN npm install --legacy-peer-deps
 
 # Copy all source files
 COPY . .
@@ -15,16 +15,20 @@ COPY . .
 # Build the production app
 RUN npm run build
 
-# Stage 2: Serve with nginx
-FROM nginx:alpine
+# Stage 2: Serve with lightweight nginx
+FROM nginx:1.25-alpine
 
-# Copy built files to nginx
-COPY --from=builder /app/dist /usr/share/nginx/html
+# Remove default nginx config
+RUN rm /etc/nginx/conf.d/default.conf
 
-# Copy nginx config
+# Copy custom nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 8080 (Cloud Run requirement)
+# Copy built React app from builder stage
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Expose port 8080 (required by Cloud Run)
 EXPOSE 8080
 
+# Start nginx
 CMD ["nginx", "-g", "daemon off;"]
