@@ -25,8 +25,9 @@ export function AppProvider({ children }) {
 
   // Initialize Firebase on mount
   useEffect(() => {
-    const { app } = initFirebase();
-    setFirebaseReady(!!app);
+    initFirebase().then(({ app }) => {
+      setFirebaseReady(!!app);
+    });
     logPageView('Home');
   }, []);
 

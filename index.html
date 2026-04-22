@@ -4,21 +4,37 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗳</text></svg>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Election Process Educator AI - Learn about Indian elections interactively" />
-    <meta name="keywords" content="election, India, voting, democracy, education, AI" />
+    <meta name="description" content="Election Process Educator AI - Learn about Indian elections interactively with AI assistance" />
+    <meta name="keywords" content="election, India, voting, democracy, education, AI, EVM, NOTA" />
+    <meta name="author" content="Election Educator AI" />
     <meta property="og:title" content="Election Process Educator AI" />
     <meta property="og:description" content="Learn about Indian elections with AI assistance" />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#ff6b35" />
     <title>Election Process Educator AI</title>
+
+    <!-- Google Fonts API (Google Service) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ELECTION2024"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Google Analytics (Google Service) - gtag.js -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ELECTION2024AI"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-ELECTION2024');
+      gtag('config', 'G-ELECTION2024AI', {
+        page_title: 'Election Process Educator AI',
+        send_page_view: true,
+        cookie_flags: 'SameSite=None;Secure',
+      });
+      // Track initial load
+      gtag('event', 'app_loaded', {
+        event_category: 'App',
+        event_label: 'Election Educator AI',
+        value: 1
+      });
     </script>
   </head>
   <body>
