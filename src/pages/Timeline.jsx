@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { electionSteps } from '../data/electionData';
+import { logTimelineStepViewed } from '../services/firebase';
 
 export default function Timeline() {
   const { darkMode, language, updateTimeline } = useApp();
@@ -14,6 +15,7 @@ export default function Timeline() {
       newCompleted.add(step.id);
       setCompletedSteps(newCompleted);
       updateTimeline(newCompleted.size);
+      logTimelineStepViewed(step.id, step.title);
     }
   };
 

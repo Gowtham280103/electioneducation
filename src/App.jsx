@@ -6,19 +6,25 @@ import Chat from './pages/Chat';
 import Timeline from './pages/Timeline';
 import Quiz from './pages/Quiz';
 import Facts from './pages/Facts';
+import { logPageView } from './services/firebase';
 
 function AppContent() {
   const [activePage, setActivePage] = useState('home');
   const { darkMode } = useApp();
 
+  const navigateTo = (page) => {
+    setActivePage(page);
+    logPageView(page);
+  };
+
   const renderPage = () => {
     switch (activePage) {
-      case 'home': return <HomeEnhanced setActivePage={setActivePage} />;
+      case 'home': return <HomeEnhanced setActivePage={navigateTo} />;
       case 'chat': return <Chat />;
       case 'timeline': return <Timeline />;
       case 'quiz': return <Quiz />;
       case 'facts': return <Facts />;
-      default: return <HomeEnhanced setActivePage={setActivePage} />;
+      default: return <HomeEnhanced setActivePage={navigateTo} />;
     }
   };
 
@@ -39,7 +45,7 @@ function AppContent() {
           style={{ background: 'radial-gradient(circle, #764ba2, transparent)' }} />
       </div>
 
-      <Navbar activePage={activePage} setActivePage={setActivePage} />
+      <Navbar activePage={activePage} setActivePage={navigateTo} />
       <main className="relative z-10">{renderPage()}</main>
 
       <footer className={`relative z-10 py-8 px-4 text-center border-t ${darkMode ? 'border-white/10 text-gray-500' : 'border-gray-200 text-gray-400'}`}>

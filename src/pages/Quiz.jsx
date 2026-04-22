@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { quizQuestions } from '../data/electionData';
+import { saveQuizResult, logQuizCompleted } from '../services/firebase';
 
 export default function Quiz() {
   const { darkMode, language, completeQuiz } = useApp();
@@ -38,7 +39,9 @@ export default function Quiz() {
       setSelected(null);
       setAnswered(false);
     } else {
-      completeQuiz(Math.round((score / TOTAL) * 100));
+      const pct = Math.round((score / TOTAL) * 100);
+      completeQuiz(pct);
+      saveQuizResult(score, TOTAL, pct);
       setPhase('result');
     }
   };

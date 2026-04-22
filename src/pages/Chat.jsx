@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { aiResponses, suggestedQuestions } from '../data/electionData';
+import { logQuestionAsked, saveChatMessage } from '../services/firebase';
 
 function getAIResponse(query) {
   const q = query.toLowerCase();
@@ -51,6 +52,10 @@ export default function Chat() {
       title: response.title,
       tags: response.tags
     };
+
+    // Log to Firebase
+    logQuestionAsked(query, language);
+    saveChatMessage(query, response.content, language);
 
     setIsTyping(false);
     setMessages(prev => [...prev, aiMsg]);
